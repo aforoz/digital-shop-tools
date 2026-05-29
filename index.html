@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Digital Shop Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0e0e0e;
+    --surface: #161616;
+    --border: #2a2a2a;
+    --accent: #f0a500;
+    --text: #f0ede8;
+    --muted: #888;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(14,14,14,0.92);
+    backdrop-filter: blur(12px);
+  }
+  .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.02em;
+    color: var(--text);
+  }
+  .logo span { color: var(--accent); }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 400; transition: color 0.2s; }
+  nav ul a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 2.5rem 4rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .eyebrow {
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--accent); }
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+  }
+  h1 em { color: var(--accent); font-style: italic; }
+  .hero-sub {
+    font-size: 1.1rem; color: var(--muted); max-width: 540px;
+    margin-bottom: 3rem; font-weight: 300;
+  }
+  .cta-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 0.875rem 1.75rem;
+    background: var(--accent); color: #0e0e0e;
+    border: none; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.875rem; font-weight: 500;
+    text-decoration: none; cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 0.875rem 1.75rem;
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border); border-radius: 4px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.875rem; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--muted); }
+
+  /* STATS */
+  .stats {
+    border-top: 1px solid var(--border);
+    margin-top: 5rem;
+    padding-top: 3rem;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 900px; margin-left: auto; margin-right: auto;
+    padding-left: 2.5rem; padding-right: 2.5rem;
+  }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem; color: var(--text);
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.05em; margin-top: 4px; }
+
+  /* FEATURES */
+  .section {
+    max-width: 900px; margin: 0 auto;
+    padding: 6rem 2.5rem;
+  }
+  .section-tag {
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 400; margin-bottom: 3rem;
+  }
+  .features {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5px; background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .feature {
+    background: var(--surface);
+    padding: 2rem;
+    transition: background 0.2s;
+  }
+  .feature:hover { background: #1c1c1c; }
+  .feature-icon {
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+  }
+  .feature h3 { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.5rem; }
+  .feature p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+  /* HOW IT WORKS */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: grid; grid-template-columns: 48px 1fr;
+    gap: 1.5rem; padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem; color: var(--border);
+    padding-top: 2px;
+  }
+  .step h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.4rem; }
+  .step p { font-size: 0.85rem; color: var(--muted); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+    max-width: 900px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  footer p { font-size: 0.8rem; color: var(--muted); }
+  .footer-badge {
+    font-size: 0.7rem; color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 4px 10px; border-radius: 20px;
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.25rem; }
+    nav ul { display: none; }
+    .hero { padding: 7rem 1.25rem 3rem; }
+    .stats { grid-template-columns: 1fr 1fr; padding: 2rem 1.25rem; }
+    .section { padding: 4rem 1.25rem; }
+    footer { padding: 1.5rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">digital<span>.</span>shop</div>
+  <ul>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow">Etsy Seller Tools</div>
+  <h1>Manage your digital shop <em>effortlessly</em></h1>
+  <p class="hero-sub">A lightweight toolkit for Etsy digital sellers. Bulk upload listings, manage tags, track performance — all from a simple interface.</p>
+  <div class="cta-row">
+    <a href="#features" class="btn-primary">Explore features →</a>
+    <a href="#how" class="btn-ghost">How it works</a>
+  </div>
+</section>
+
+<div class="stats">
+  <div>
+    <div class="stat-num">50<span>+</span></div>
+    <div class="stat-label">Listings per day</div>
+  </div>
+  <div>
+    <div class="stat-num">100<span>%</span></div>
+    <div class="stat-label">Etsy API compliant</div>
+  </div>
+  <div>
+    <div class="stat-num">0<span>$</span></div>
+    <div class="stat-label">Monthly fees</div>
+  </div>
+</div>
+
+<section class="section" id="features">
+  <div class="section-tag">What we do</div>
+  <h2>Everything a digital seller needs</h2>
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">↑</div>
+      <h3>Bulk upload</h3>
+      <p>Upload dozens of listings at once via CSV. No copy-pasting, no repeated clicking.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">#</div>
+      <h3>Tag management</h3>
+      <p>Organize and reuse tag sets across your listings. Max Etsy SEO with minimal effort.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">⟳</div>
+      <h3>Auto-renew</h3>
+      <p>Keep listings active automatically. Never lose visibility because a listing expired.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">↗</div>
+      <h3>Analytics</h3>
+      <p>Track views, favorites, and sales per listing. Understand what works.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="section-tag">Process</div>
+  <h2>Simple by design</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div>
+        <h3>Connect your Etsy shop</h3>
+        <p>Authorize once via Etsy OAuth. We never store your credentials.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div>
+        <h3>Prepare your listings</h3>
+        <p>Fill in our CSV template with titles, descriptions, prices and tags.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div>
+        <h3>Upload in one click</h3>
+        <p>Hit upload. Listings go live as drafts on Etsy. Review and publish.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div>
+        <h3>Track & optimize</h3>
+        <p>Monitor performance and tweak listings based on real data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <p>© 2025 digitalshop — built for Etsy sellers</p>
+  <div class="footer-badge">Etsy API compliant</div>
+</footer>
+
+</body>
+</html>
